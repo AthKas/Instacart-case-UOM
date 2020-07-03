@@ -57,13 +57,6 @@ aisles = pd.read_csv('../input/aisles.csv')
 departments = pd.read_csv('../input/departments.csv')
 
 
-# In[6]:
-
-
-#### Remove triple quotes to trim your dataset and experiment with your data
-# COMMANDS FOR CODING TESTING - Get 10% of users 
-orders = orders.loc[orders.user_id.isin(orders.user_id.drop_duplicates().sample(frac=0.1, random_state=25))]
-
 
 # In[7]:
 
