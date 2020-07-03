@@ -655,11 +655,6 @@ data_test = data_test.drop(['eval_set','order_id'], axis=1)
 data_test.head()
 
 
-# In[74]:
-
-
-pip install xgboost
-
 
 # In[75]:
 
