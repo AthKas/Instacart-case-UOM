@@ -5,7 +5,7 @@
 
 
 # For data manipulation
-import pandas as pd 
+import pandas as pd  
 
 
 # Garbage Collector to free up memory
@@ -673,17 +673,16 @@ X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
 ########################################
 ## SET BOOSTER'S PARAMETERS
 ########################################
-parameters = {'eval_metric':'logloss', 
+param = {'eval_metric':'logloss', 
               'max_depth': 5, 
               'colsample_bytree': 0.4,
               'subsample': 0.75,
-              'n_estimators': 50
              }
 
 ########################################
 ## INSTANTIATE XGBClassifier()
 ########################################
-xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=parameters, num_boost_round=10)
+xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=param, num_boost_round=10, n_estimators: 50, gpu_id=0, tree_method = 'gpu_hist' )
 
 ########################################
 ## TRAIN MODEL
