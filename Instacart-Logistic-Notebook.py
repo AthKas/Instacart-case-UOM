@@ -682,7 +682,7 @@ param = {'eval_metric':'logloss',
 ########################################
 ## INSTANTIATE XGBClassifier()
 ########################################
-xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=param, num_boost_round=10, n_estimators: 50, gpu_id=0, tree_method = 'gpu_hist' )
+xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=param, num_boost_round=10, n_estimators=50, gpu_id=0, tree_method = 'gpu_hist' )
 
 ########################################
 ## TRAIN MODEL
