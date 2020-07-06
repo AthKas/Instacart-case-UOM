@@ -473,47 +473,67 @@ data_test.head()
 
 
 
-# TRAIN FULL 
+###########################
+## DISABLE WARNINGS
+###########################
+import sys
+import warnings
+
+if not sys.warnoptions:
+    warnings.simplefilter("ignore")
+
 ###########################
 ## IMPORT REQUIRED PACKAGES
 ###########################
 import xgboost as xgb
+from sklearn.model_selection import GridSearchCV
 
-##########################################
-## SPLIT DF TO: X_train, y_train (axis=1)
-##########################################
-X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
-
-########################################
-## SET BOOSTER'S PARAMETERS
-########################################
-param = {'eval_metric':'logloss', 
-              'max_depth': 5, 
-              'colsample_bytree': 0.4,
-              'subsample': 0.75,
-             }
+####################################
+## SET BOOSTER'S RANGE OF PARAMETERS
+# IMPORTANT NOTICE: Fine-tuning an XGBoost model may be a computational prohibitive process with a regular computer or a Kaggle kernel. 
+# Be cautious what parameters you enter in paramiGrid section.
+# More paremeters means that GridSearch will create and evaluate more models.
+####################################    
+paramGrid = {"max_depth":[5,10],
+            "colsample_bytree":[0.3,0.4]}  
 
 ########################################
 ## INSTANTIATE XGBClassifier()
 ########################################
-xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=param, num_boost_round=10, n_estimators=50)
+xgbc = xgb.XGBClassifier(objective='binary:logistic', eval_metric='logloss', num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
 
-########################################
-## TRAIN MODEL
-########################################
-model = xgbc.fit(X_train, y_train)
+##############################################
+## DEFINE HOW TO TRAIN THE DIFFERENT MODELS
+#############################################
+gridsearch = GridSearchCV(xgbc, paramGrid, cv=3, verbose=2, n_jobs=1)
+
+################################################################
+## TRAIN THE MODELS
+### - with the combinations of different parameters
+### - here is where GridSearch will be exeucuted
+#################################################################
+model = gridsearch.fit(X_train, y_train)
 
 ##################################
-# FEATURE IMPORTANCE - GRAPHICAL
+## OUTPUT(S)
 ##################################
-#xgb.plot_importance(model)
+# Print the best parameters
+print("The best parameters are: /n",  gridsearch.best_params_)
+
+# Store the model for prediction (chapter 5)
+model = gridsearch.best_estimator_
+
+# Delete X_train , y_train
+del [X_train, y_train]
 
 
-model.get_xgb_params()
+# The model has now the new parameters from GridSearchCV:
 
-#Remove all unnecessary objects
-del orders_future
-gc.collect()
+# In[ ]:
+
+
+model.get_params()
+
 
 
 
