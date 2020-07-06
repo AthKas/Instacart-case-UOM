@@ -18,7 +18,7 @@ gc.enable()                       # Activate
 
 #install kaggleApi
 from kaggle.api.kaggle_api_extended import KaggleApi
-api = KaggleApi({"username":"athinakasimidou","key":"77233655dde27b7c0e8c1e23587d96af"})
+api = KaggleApi({"username":"athinakasimidou","key":"209f56e577e103568cc819036fd5cede"})
 api.authenticate()
 files = api.competition_download_files('instacart-market-basket-analysis')
 
