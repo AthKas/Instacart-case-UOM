@@ -705,11 +705,11 @@ sub.head()
 
 
 
-Check if sub file has 75000 predictions
+#Check if sub file has 75000 predictions
 sub.shape[0]
 print(sub.shape[0]==75000)
 
 
-get csv
+#get csv
 sub.to_csv('sub.csv', index=False)
 
