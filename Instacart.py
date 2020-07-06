@@ -471,7 +471,37 @@ data_test = data_test.drop(['eval_set','order_id'], axis=1)
 #Check if the data_test DF, has the same number of columns as the data_train DF, excluding the response variable
 data_test.head()
 
+# TRAIN FULL 
+###########################
+## IMPORT REQUIRED PACKAGES
+###########################
+import xgboost as xgb
 
+##########################################
+## SPLIT DF TO: X_train, y_train (axis=1)
+##########################################
+X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
+
+########################################
+## SET BOOSTER'S PARAMETERS
+########################################
+parameters = {'eval_metric':'logloss', 
+              'max_depth': 5, 
+              'colsample_bytree': 0.4,
+              'subsample': 0.75,
+             }
+
+########################################
+## INSTANTIATE XGBClassifier()
+########################################
+xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=parameters, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
+
+########################################
+## TRAIN MODEL
+########################################
+model = xgbc.fit(X_train, y_train)
+
+model.get_xgb_params()
 
 ###########################
 ## DISABLE WARNINGS
