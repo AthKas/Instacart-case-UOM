@@ -299,11 +299,14 @@ times = op.groupby(['user_id', 'product_id'])[['order_id']].count()
 times.columns = ['Times_Bought_N']
 times.head()
 
+uxp_mean5 = op5.groupby(['user_id', 'product_id'])['reordered'].mean().to_frame('uxp_mean_5')
+uxp_mean5.head()
 
 
 #Create total_orders
 total_orders = op.groupby('user_id')['order_number'].max().to_frame('total_orders') #
 total_orders.head()
+
 
 
 #Create first_order_number
@@ -317,7 +320,6 @@ first_order_no.head()
 #Merge features to the user x product array
 span = pd.merge(total_orders, first_order_no, on='user_id', how='right')
 span.head()
-
 
 
 # The +1 includes in the difference the first order were the product has been purchased
@@ -348,19 +350,17 @@ uxp = uxp.merge(uxp_ratio, on=['user_id', 'product_id'], how='left')
 del uxp_ratio
 uxp.head()
 
-
+uxp = uxp.merge(uxp_mean5, on=['user_id', 'product_id'], how='left')
+del uxp_mean5
+uxp.head()
 
 #Delete non useful features
 uxp = uxp.drop(['total_orders', 'first_order_number', 'Order_Range_D', 'Times_Bought_N'], axis=1)
 uxp.head()
 
-
-
 #Create times_last5
 last_five = op5.groupby(['user_id','product_id'])['order_id'].count().to_frame('times_last5')
 last_five.head(10)
-
-
 
 #Merge features to the user x product array
 uxp = uxp.merge(last_five, on=['user_id', 'product_id'], how='left')
@@ -368,8 +368,57 @@ uxp['times_last5'] = uxp['times_last5'].fillna(0)
 del last_five
 uxp.head()
 
+#Create uxp_aop
+uxp_aop= op.groupby(['user_id', 'product_id'])['add_to_cart_order'].mean().to_frame('uxp_aop')
+uxp_aop.head()
 
+#Create uxp_aop5
+uxp_aop5 = op5.groupby(['user_id', 'product_id'])['add_to_cart_order'].mean().to_frame('uxp_aop_5')
+uxp_aop5.head()
 
+#Merge features to the user x product array
+uxp = uxp.merge(uxp_aop, on=['user_id', 'product_id'], how='left')
+del uxp_aop
+uxp.head()
+
+#Merge features to the user x product array
+uxp = uxp.merge(uxp_aop5, on=['user_id', 'product_id'], how='left')
+del uxp_aop5
+uxp.head()
+
+#Create uxp_dow
+uxp_dow= op.groupby(['user_id', 'product_id'])['order_dow'].mean().to_frame('uxp_dow')
+uxp_dow.head()
+#Create uxp_dow5
+uxp_dow5= op5.groupby(['user_id', 'product_id'])['order_dow'].mean().to_frame('uxp_dow5')
+uxp_dow5.head()
+
+#Create uxp_hour
+uxp_hour= op.groupby(['user_id', 'product_id'])['order_hour_of_day'].mean().to_frame('uxp_hour')
+uxp_hour.head()
+#Create uxp_hour5
+uxp_hour5= op5.groupby(['user_id', 'product_id'])['order_hour_of_day'].mean().to_frame('uxp_hour5')
+uxp_hour5.head()
+
+#Merge features to the user x product array
+uxp = uxp.merge(uxp_dow, on=['user_id', 'product_id'], how='left')
+del uxp_dow
+uxp.head()
+
+#Merge features to the user x product array
+uxp = uxp.merge(uxp_dow5, on=['user_id', 'product_id'], how='left')
+del uxp_dow5
+uxp.head()
+
+#Merge features to the user x product array
+uxp = uxp.merge(uxp_hour, on=['user_id', 'product_id'], how='left')
+del uxp_dow
+uxp.head()
+
+#Merge features to the user x product array
+uxp = uxp.merge(uxp_hour5, on=['user_id', 'product_id'], how='left')
+del uxp_dow5
+uxp.head()
 #Remove temporary DataFrames
 del op
 gc.collect()
@@ -529,8 +578,8 @@ paramGrid = {"max_depth":[8],
             "subsample":[0.8],
             "lambda": [0.9],
             "min_child_weight": [0.9],
-            "eta": [0.2, 0.3, 0.4],
-            "gamma": [1,2]}  
+            "eta": [0.4 , 0.5],
+            "gamma": [2 , 5]}  
 
 ########################################
 ## INSTANTIATE XGBClassifier()
