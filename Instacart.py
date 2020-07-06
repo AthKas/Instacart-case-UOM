@@ -535,9 +535,13 @@ X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
 ## SET BOOSTER'S PARAMETERS
 ########################################
 parameters = {'eval_metric':'logloss', 
-              'max_depth': 8, 
-              'colsample_bytree': 0.4,
-              'subsample': 0.9,
+              "max_depth":[8],
+            "colsample_bytree":[0.4],
+            "subsample":[0.95],
+            "lambda": [0.9],
+            "min_child_weight": [ 0.9],
+            "eta": [0.5],
+            "gamma": [4],
              }
 
 ########################################
@@ -551,7 +555,7 @@ xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=parameters, num
 model = xgbc.fit(X_train, y_train)
 
 model.get_xgb_params()
-
+'''''
 ###########################
 ## DISABLE WARNINGS
 ###########################
@@ -607,7 +611,7 @@ print("The best parameters are: /n",  gridsearch.best_params_)
 
 # Store the model for prediction (chapter 5)
 model = gridsearch.best_estimator_
-
+'''''
 # Delete X_train , y_train
 del [X_train, y_train]
 
@@ -690,22 +694,22 @@ d
 
 
 #Convert the dictionary into a DataFrame
-#sub = pd.DataFrame.from_dict(d, orient='index')
+sub = pd.DataFrame.from_dict(d, orient='index')
 
 #Reset index
-#sub.reset_index(inplace=True)
-#Set column names
-#sub.columns = ['order_id', 'products']
+sub.reset_index(inplace=True)
+Set column names
+sub.columns = ['order_id', 'products']
 
-#sub.head()
-
-
-
-#Check if sub file has 75000 predictions
-#sub.shape[0]
-#print(sub.shape[0]==75000)
+sub.head()
 
 
-#get csv
-#sub.to_csv('sub.csv', index=False)
+
+Check if sub file has 75000 predictions
+sub.shape[0]
+print(sub.shape[0]==75000)
+
+
+get csv
+sub.to_csv('sub.csv', index=False)
 
