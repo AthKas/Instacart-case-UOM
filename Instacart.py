@@ -575,11 +575,11 @@ from sklearn.model_selection import GridSearchCV
 ####################################    
 paramGrid = {"max_depth":[8],
             "colsample_bytree":[0.4],
-            "subsample":[0.95, 1],
+            "subsample":[0.95],
             "lambda": [0.9],
-            "min_child_weight": [0.8, 0.9],
-            "eta": [0.5],
-            "gamma": [2]}  
+            "min_child_weight": [ 0.9],
+            "eta": [0.5, 0.4, 0.3],
+            "gamma": [2, 3]}  
 
 ########################################
 ## INSTANTIATE XGBClassifier()
@@ -589,7 +589,7 @@ xgbc = xgb.XGBClassifier(objective='binary:logistic', eval_metric='logloss', num
 ##############################################
 ## DEFINE HOW TO TRAIN THE DIFFERENT MODELS
 #############################################
-gridsearch = GridSearchCV(xgbc, paramGrid, cv=3, verbose=2, n_jobs=1)
+gridsearch = GridSearchCV(xgbc, paramGrid, cv=5, verbose=2, n_jobs=1)
 
 ################################################################
 ## TRAIN THE MODELS
