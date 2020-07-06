@@ -367,8 +367,8 @@ uxp_aop= op.groupby(['user_id', 'product_id'])['add_to_cart_order'].mean().to_fr
 uxp_aop.head()
 
 #Create uxp_aop5
-uxp_aop5 = op5.groupby(['user_id', 'product_id'])['add_to_cart_order'].mean().to_frame('uxp_aop_5')
-uxp_aop5.head()
+#uxp_aop5 = op5.groupby(['user_id', 'product_id'])['add_to_cart_order'].mean().to_frame('uxp_aop_5')
+#uxp_aop5.head()
 
 #Merge features to the user x product array
 uxp = uxp.merge(uxp_aop, on=['user_id', 'product_id'], how='left')
@@ -377,24 +377,24 @@ uxp['uxp_aop'] = uxp['uxp_aop'].fillna(0)
 uxp.head()
 
 #Merge features to the user x product array
-uxp = uxp.merge(uxp_aop5, on=['user_id', 'product_id'], how='left')
-del uxp_aop5
-uxp['uxp_aop_5'] = uxp['uxp_aop_5'].fillna(0)
-uxp.head()
+#uxp = uxp.merge(uxp_aop5, on=['user_id', 'product_id'], how='left')
+#del uxp_aop5
+#uxp['uxp_aop_5'] = uxp['uxp_aop_5'].fillna(0)
+#uxp.head()
 
 #Create uxp_dow
 uxp_dow= op.groupby(['user_id', 'product_id'])['order_dow'].mean().to_frame('uxp_dow')
 uxp_dow.head()
 #Create uxp_dow5
-uxp_dow5= op5.groupby(['user_id', 'product_id'])['order_dow'].mean().to_frame('uxp_dow5')
-uxp_dow5.head()
+#uxp_dow5= op5.groupby(['user_id', 'product_id'])['order_dow'].mean().to_frame('uxp_dow5')
+#uxp_dow5.head()
 
 #Create uxp_hour
 uxp_hour= op.groupby(['user_id', 'product_id'])['order_hour_of_day'].mean().to_frame('uxp_hour')
 uxp_hour.head()
 #Create uxp_hour5
-uxp_hour5= op5.groupby(['user_id', 'product_id'])['order_hour_of_day'].mean().to_frame('uxp_hour5')
-uxp_hour5.head()
+#uxp_hour5= op5.groupby(['user_id', 'product_id'])['order_hour_of_day'].mean().to_frame('uxp_hour5')
+#uxp_hour5.head()
 
 #Merge features to the user x product array
 uxp = uxp.merge(uxp_dow, on=['user_id', 'product_id'], how='left')
@@ -403,10 +403,10 @@ uxp['uxp_dow'] = uxp['uxp_dow'].fillna(0)
 uxp.head()
 
 #Merge features to the user x product array
-uxp = uxp.merge(uxp_dow5, on=['user_id', 'product_id'], how='left')
-del uxp_dow5
-uxp['uxp_dow5'] = uxp['uxp_dow5'].fillna(0)
-uxp.head()
+#uxp = uxp.merge(uxp_dow5, on=['user_id', 'product_id'], how='left')
+#del uxp_dow5
+#uxp['uxp_dow5'] = uxp['uxp_dow5'].fillna(0)
+#uxp.head()
 
 #Merge features to the user x product array
 uxp = uxp.merge(uxp_hour, on=['user_id', 'product_id'], how='left')
@@ -415,10 +415,10 @@ uxp['uxp_hour'] = uxp['uxp_hour'].fillna(0)
 uxp.head()
 
 #Merge features to the user x product array
-uxp = uxp.merge(uxp_hour5, on=['user_id', 'product_id'], how='left')
-del uxp_hour5
-uxp['uxp_hour5'] = uxp['uxp_hour5'].fillna(0)
-uxp.head()
+#uxp = uxp.merge(uxp_hour5, on=['user_id', 'product_id'], how='left')
+#del uxp_hour5
+#uxp['uxp_hour5'] = uxp['uxp_hour5'].fillna(0)
+#uxp.head()
 #Remove temporary DataFrames
 del op, op5
 gc.collect()
