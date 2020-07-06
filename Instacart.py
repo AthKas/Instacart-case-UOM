@@ -578,9 +578,9 @@ paramGrid = {"max_depth":[8],
             "subsample":[0.95],
             "lambda": [0.9],
             "min_child_weight": [ 0.9],
-            "eta": [0.4,0.5],
-            "gamma": [4,5],
-            "num_boost_round": [10,50]}  
+            "eta": [0.3 0.4],
+            "gamma": [4],
+            }  
 
 ########################################
 ## INSTANTIATE XGBClassifier()
