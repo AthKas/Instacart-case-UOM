@@ -627,7 +627,7 @@ model.get_params()
 
 
 
-
+'''''
 ## OR set a custom threshold (in this problem, 0.21 yields the best prediction)
 test_pred = (model.predict_proba(data_test)[:,1] >= 0.21).astype(int)
 test_pred[0:20] #display the first 20 predictions of the numpy array
