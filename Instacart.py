@@ -412,15 +412,15 @@ uxp.head()
 
 #Merge features to the user x product array
 uxp = uxp.merge(uxp_hour, on=['user_id', 'product_id'], how='left')
-del uxp_dow
+del uxp_hour
 uxp.head()
 
 #Merge features to the user x product array
 uxp = uxp.merge(uxp_hour5, on=['user_id', 'product_id'], how='left')
-del uxp_dow5
+del uxp_hour5
 uxp.head()
 #Remove temporary DataFrames
-del op
+del op, op5
 gc.collect()
 
 
