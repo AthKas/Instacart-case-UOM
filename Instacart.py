@@ -299,9 +299,6 @@ times = op.groupby(['user_id', 'product_id'])[['order_id']].count()
 times.columns = ['Times_Bought_N']
 times.head()
 
-uxp_mean5 = op5.groupby(['user_id', 'product_id'])['reordered'].mean().to_frame('uxp_mean_5')
-uxp_mean5.head()
-
 
 #Create total_orders
 total_orders = op.groupby('user_id')['order_number'].max().to_frame('total_orders') #
@@ -350,10 +347,6 @@ uxp = uxp.merge(uxp_ratio, on=['user_id', 'product_id'], how='left')
 del uxp_ratio
 uxp.head()
 
-uxp = uxp.merge(uxp_mean5, on=['user_id', 'product_id'], how='left')
-del uxp_mean5
-uxp['uxp_mean_5'] = uxp['uxp_mean_5'].fillna(0)
-uxp.head()
 
 #Delete non useful features
 uxp = uxp.drop(['total_orders', 'first_order_number', 'Order_Range_D', 'Times_Bought_N'], axis=1)
