@@ -214,7 +214,7 @@ prd5.head()
 prd = prd.merge(prd5, on='product_id', how='left')
 del prd5
 gc.collect()
-
+prd['prd_t_purchases5'] = prd['prd_t_purchases5'].fillna(0)
 prd.head()
 
 
@@ -352,6 +352,7 @@ uxp.head()
 
 uxp = uxp.merge(uxp_mean5, on=['user_id', 'product_id'], how='left')
 del uxp_mean5
+uxp['uxp_mean_5'] = uxp['uxp_mean_5'].fillna(0)
 uxp.head()
 
 #Delete non useful features
@@ -379,11 +380,13 @@ uxp_aop5.head()
 #Merge features to the user x product array
 uxp = uxp.merge(uxp_aop, on=['user_id', 'product_id'], how='left')
 del uxp_aop
+uxp['uxp_aop'] = uxp['uxp_aop'].fillna(0)
 uxp.head()
 
 #Merge features to the user x product array
 uxp = uxp.merge(uxp_aop5, on=['user_id', 'product_id'], how='left')
 del uxp_aop5
+uxp['uxp_aop_5'] = uxp['uxp_aop_5'].fillna(0)
 uxp.head()
 
 #Create uxp_dow
@@ -403,21 +406,25 @@ uxp_hour5.head()
 #Merge features to the user x product array
 uxp = uxp.merge(uxp_dow, on=['user_id', 'product_id'], how='left')
 del uxp_dow
+uxp['uxp_dow'] = uxp['uxp_dow'].fillna(0)
 uxp.head()
 
 #Merge features to the user x product array
 uxp = uxp.merge(uxp_dow5, on=['user_id', 'product_id'], how='left')
 del uxp_dow5
+uxp['uxp_dow5'] = uxp['uxp_dow5'].fillna(0)
 uxp.head()
 
 #Merge features to the user x product array
 uxp = uxp.merge(uxp_hour, on=['user_id', 'product_id'], how='left')
 del uxp_hour
+uxp['uxp_hour'] = uxp['uxp_hour'].fillna(0)
 uxp.head()
 
 #Merge features to the user x product array
 uxp = uxp.merge(uxp_hour5, on=['user_id', 'product_id'], how='left')
 del uxp_hour5
+uxp['uxp_hour5'] = uxp['uxp_hour5'].fillna(0)
 uxp.head()
 #Remove temporary DataFrames
 del op, op5
@@ -541,7 +548,8 @@ parameters = {'eval_metric':'logloss',
             "lambda": [0.9],
             "min_child_weight": [ 0.9],
             "eta": [0.5],
-            "gamma": [4],
+            "gamma": [4], 
+              "n_estimators": [50]
              }
 
 ########################################
