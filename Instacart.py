@@ -556,7 +556,7 @@ xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=parameters, num
 model = xgbc.fit(X_train, y_train)
 
 model.get_xgb_params()
-'''''
+
 ###########################
 ## DISABLE WARNINGS
 ###########################
@@ -582,9 +582,9 @@ paramGrid = {"max_depth":[8],
             "colsample_bytree":[0.4],
             "subsample":[0.95],
             "lambda": [0.9],
-            "min_child_weight": [ 0.9],
+            "min_child_weight": [ 0.9, 0.95],
             "eta": [0.2,0.3],
-            "gamma": [4],
+            "gamma": [4,5],
             }  
 
 ########################################
@@ -595,7 +595,7 @@ xgbc = xgb.XGBClassifier(objective='binary:logistic', eval_metric='logloss', num
 ##############################################
 ## DEFINE HOW TO TRAIN THE DIFFERENT MODELS
 #############################################
-gridsearch = GridSearchCV(xgbc, paramGrid, cv=5, verbose=2, n_jobs=1)
+gridsearch = GridSearchCV(xgbc, paramGrid, cv=3, verbose=2, n_jobs=1)
 
 ################################################################
 ## TRAIN THE MODELS
@@ -612,7 +612,7 @@ print("The best parameters are: /n",  gridsearch.best_params_)
 
 # Store the model for prediction (chapter 5)
 model = gridsearch.best_estimator_
-'''''
+
 # Delete X_train , y_train
 del [X_train, y_train]
 
