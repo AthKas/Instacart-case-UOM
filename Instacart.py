@@ -698,7 +698,7 @@ sub = pd.DataFrame.from_dict(d, orient='index')
 
 #Reset index
 sub.reset_index(inplace=True)
-Set column names
+#Set column names
 sub.columns = ['order_id', 'products']
 
 sub.head()
