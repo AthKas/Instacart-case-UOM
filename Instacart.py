@@ -575,10 +575,10 @@ from sklearn.model_selection import GridSearchCV
 ####################################    
 paramGrid = {"max_depth":[8],
             "colsample_bytree":[0.4],
-            "subsample":[0.9, 0.95],
-            "lambda": [0.9, 1],
-            "min_child_weight": [0.9, 0.95],
-            "eta": [ 0.5],
+            "subsample":[0.95, 1],
+            "lambda": [0.9],
+            "min_child_weight": [0.8, 0.9],
+            "eta": [0.5],
             "gamma": [2]}  
 
 ########################################
