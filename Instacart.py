@@ -486,7 +486,7 @@ X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
 ## SET BOOSTER'S PARAMETERS
 ########################################
 parameters = {'eval_metric':'logloss', 
-              'max_depth': 5, 
+              'max_depth': 10, 
               'colsample_bytree': 0.4,
               'subsample': 0.75,
              }
@@ -524,8 +524,9 @@ from sklearn.model_selection import GridSearchCV
 # Be cautious what parameters you enter in paramiGrid section.
 # More paremeters means that GridSearch will create and evaluate more models.
 ####################################    
-paramGrid = {"max_depth":[5,10],
-            "colsample_bytree":[0.3,0.4]}  
+paramGrid = {"max_depth":[9 ,10, 11],
+            "colsample_bytree":[0.3, 0.4],
+            "subsample":[0.7, 0.8]}  
 
 ########################################
 ## INSTANTIATE XGBClassifier()
@@ -535,7 +536,7 @@ xgbc = xgb.XGBClassifier(objective='binary:logistic', eval_metric='logloss', num
 ##############################################
 ## DEFINE HOW TO TRAIN THE DIFFERENT MODELS
 #############################################
-gridsearch = GridSearchCV(xgbc, paramGrid, cv=3, verbose=2, n_jobs=1)
+gridsearch = GridSearchCV(xgbc, paramGrid, cv=5, verbose=2, n_jobs=1)
 
 ################################################################
 ## TRAIN THE MODELS
