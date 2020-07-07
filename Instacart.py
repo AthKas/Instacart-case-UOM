@@ -659,7 +659,7 @@ final.head()
 
 # In[86]:
 
-
+''''
 #remove user_id column
 final = final.drop('user_id', axis=1)
 #convert product_id as integer
@@ -712,4 +712,4 @@ print(sub.shape[0]==75000)
 #get csv
 sub.to_csv('sub.csv', index=False)
 
-
+'''''
