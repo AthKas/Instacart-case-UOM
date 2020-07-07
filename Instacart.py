@@ -598,11 +598,8 @@ parameters = {"objective":'binary:logistic',
              }
 ########################################
 ########################################
-model = xgb.train(dtrain= D_train, params=parameters , num_boost_round=500)
+model = xgb.train(params=parameters, dtrain= D_train, num_boost_round=500)
 #xgb.plot_importance(model)
-
-# Delete X_train , y_train
-del [X_train, y_train]
 
 
 ## OR set a custom threshold (in this problem, 0.21 yields the best prediction)
@@ -624,7 +621,8 @@ final = final[['product_id', 'user_id', 'prediction']]
 
 gc.collect()
 final.head()
-
+# Delete X_train , y_train
+del [X_train, y_train]
 
 
 #
