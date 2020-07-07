@@ -575,10 +575,10 @@ from sklearn.model_selection import GridSearchCV
 # More paremeters means that GridSearch will create and evaluate more models.
 ####################################    
 paramGrid = {"max_depth":[9],
-            "colsample_bytree":[0.5, 0.6],
-            "subsample":[0.7, 0.8],
-            "lambda": [0.95, 1],
-            "min_child_weight": [ 0.9],
+            "colsample_bytree":[0.6],
+            "subsample":[0.7],
+            "lambda": [0.95],
+            "min_child_weight": [ 0.8, 0.9, 1, 1.1],
             "eta": [0.2],
             "gamma": [6],
             }  
