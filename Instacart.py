@@ -5,7 +5,8 @@
 
 # For data manipulation
 import pandas as pd  
-
+import xgboost as xgb
+from sklearn.model_selection import GridSearchCV
 # Garbage Collector to free up memory
 import gc                         
 gc.enable()                       # Activate 
@@ -519,40 +520,12 @@ data_test = data_test.drop(['eval_set','order_id'], axis=1)
 #Check if the data_test DF, has the same number of columns as the data_train DF, excluding the response variable
 data_test.head()
 
-# TRAIN FULL 
-###########################
-## IMPORT REQUIRED PACKAGES
-###########################
-import xgboost as xgb
-##########################################
+
 ## SPLIT DF TO: X_train, y_train (axis=1)
 ##########################################
 X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
-########################################
-## SET BOOSTER'S PARAMETERS
-########################################
-parameters = {'eval_metric':'logloss', 
-              "max_depth":9,
-            "colsample_bytree":0.6,
-            "subsample":0.7,
-            "lambda": 0.95,
-            "min_child_weight": 0.7,
-            "eta": 0.2,
-            "gamma": 6,
-             }
-########################################
-## INSTANTIATE XGBClassifier()
-########################################
-xgbc = xgb.XGBClassifier(objective= 'binary:logistic',parameters=parameters ,n_estimators= 50, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
 
-########################################
-## TRAIN MODEL
-########################################
-model = xgbc.fit(X_train, y_train)
-
-model.get_xgb_params()
-
-
+# CREATE MODEL
 ###########################
 ## DISABLE WARNINGS
 ###########################
@@ -561,32 +534,25 @@ import warnings
 
 if not sys.warnoptions:
     warnings.simplefilter("ignore")
-
-###########################
-## IMPORT REQUIRED PACKAGES
-###########################
-import xgboost as xgb
-from sklearn.model_selection import GridSearchCV
-
 ####################################
 ## SET BOOSTER'S RANGE OF PARAMETERS
 # IMPORTANT NOTICE: Fine-tuning an XGBoost model may be a computational prohibitive process with a regular computer or a Kaggle kernel. 
 # Be cautious what parameters you enter in paramiGrid section.
 # More paremeters means that GridSearch will create and evaluate more models.
 ####################################    
-paramGrid = {"max_depth":[8,9],
+paramGrid = {"max_depth":[9],
             "colsample_bytree":[0.6],
             "subsample":[0.7],
             "lambda": [0.95],
             "min_child_weight": [0.7],
-            "eta": [0.2],
+            "eta": [0.1,0.2],
             "gamma": [6],
             }  
 
 ########################################
 ## INSTANTIATE XGBClassifier()
 ########################################
-xgbc = xgb.XGBClassifier(objective='binary:logistic', eval_metric='logloss', num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
+xgbc = xgb.XGBClassifier(objective='binary:logistic', eval_metric='logloss', num_boost_round=500, gpu_id=0, tree_method = 'gpu_hist')
 
 ##############################################
 ## DEFINE HOW TO TRAIN THE DIFFERENT MODELS
@@ -606,29 +572,46 @@ model = gridsearch.fit(X_train, y_train)
 # Print the best parameters
 print("The best parameters are: /n",  gridsearch.best_params_)
 
-# Store the model for prediction (chapter 5)
+# Store the model for prediction
 model = gridsearch.best_estimator_
+
+
+##########################################
+#TRAIN MODEL
+
+D_train = xgb.DMatrix(data=X_train, label = y_train)
+D_test = xgb.DMatrix(data=data_test)
+########################################
+## SET BOOSTER'S PARAMETERS
+########################################
+parameters = {"objective":'binary:logistic',
+    'eval_metric':'logloss', 
+              "max_depth":9,
+            "colsample_bytree":0.6,
+            "subsample":0.7,
+            "lambda": 0.95,
+            "min_child_weight": 0.7,
+            "eta": 0.2,
+            "gamma": 6,
+              , "gpu_id":0
+              , "tree_method": 'gpu_hist'
+             }
+########################################
+########################################
+model = xgb.train(dtrain= D_train, parameters=parameters , num_boost_round=500)
+model.get_xgb_params()
+xgb.plot_importance(model)
 
 # Delete X_train , y_train
 del [X_train, y_train]
 
 
-# The model has now the new parameters from GridSearchCV:
-
-# In[ ]:
-
-
-model.get_params()
-
-
-
-
 ## OR set a custom threshold (in this problem, 0.21 yields the best prediction)
-test_pred = (model.predict_proba(data_test)[:,1] >= 0.21).astype(int)
+test_pred = (model.predict(D_test) >= 0.21)
 test_pred[0:20] #display the first 20 predictions of the numpy array
 
 
-
+'''''
 #Save the prediction in a new column in the data_test DF
 data_test['prediction'] = test_pred
 data_test.head()
@@ -710,3 +693,4 @@ print(sub.shape[0]==75000)
 sub.to_csv('sub.csv', index=False)
 
 
+'''''
