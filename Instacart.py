@@ -593,8 +593,8 @@ parameters = {"objective":'binary:logistic',
             "min_child_weight": 0.7,
             "eta": 0.2,
             "gamma": 6,
-              , "gpu_id":0
-              , "tree_method": 'gpu_hist'
+               "gpu_id":0,
+               "tree_method": 'gpu_hist'
              }
 ########################################
 ########################################
