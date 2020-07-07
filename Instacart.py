@@ -529,9 +529,9 @@ import xgboost as xgb
 ##########################################
 ## SPLIT DF TO: X_train, y_train (axis=1)
 ##########################################
-#X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
-X_train = xgb.DMatrix(data_train.drop('reordered', axis=1), label=data_train.reordered)
-y_train = xgb.DMatrix(data_train.reordered)
+X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
+D_train = xgb.DMatrix(X_train), label=y_train)
+y_test = xgb.DMatrix(data_test)
 ########################################
 ## SET BOOSTER'S PARAMETERS
 ########################################
@@ -548,14 +548,14 @@ parameters = {'eval_metric':'logloss',
 ########################################
 ## INSTANTIATE XGBClassifier()
 ########################################
-xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=parameters, n_estimators= 50, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
+xgbc = xgb.train(parameters, D_train, steps=20, objective='binary:logistic', n_estimators= 50, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
 
 ########################################
 ## TRAIN MODEL
 ########################################
-model = xgbc.fit(X_train, y_train)
+#model = xgbc.fit(X_train, y_train)
 
-model.get_xgb_params()
+#model.get_xgb_params()
 
 ###########################
 ## DISABLE WARNINGS
