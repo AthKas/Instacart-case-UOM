@@ -543,26 +543,20 @@ parameters = {'eval_metric':'logloss',
             "min_child_weight": 0.9,
             "eta": 0.2,
             "gamma": 6,
-              "objective": 'binary:logistic',
-              "n_estimators": 50,
-              "num_boost_round": 10,
-              "gpu_id": 0,
-              "tree_method": 'gpu_hist'
              }
-steps = 20
 ########################################
 ## INSTANTIATE XGBClassifier()
 ########################################
-model = xgb.train(parameters, D_train, steps )
+xgbc = xgb.XGBClassifier(parameters, objective= 'binary:logistic',n_estimators= 50, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
 
 ########################################
 ## TRAIN MODEL
 ########################################
-#model = xgbc.fit(X_train, y_train)
+model = xgbc.fit(X_train, y_train)
 
-#model.get_xgb_params()
+model.get_xgb_params()
 
-'''''
+
 ###########################
 ## DISABLE WARNINGS
 ###########################
@@ -630,26 +624,20 @@ del [X_train, y_train]
 
 model.get_params()
 
-'''''
 
-test_pred = model.predict(D_test)
-best_preds = np.asarray([np.argmax(line) for line in test_pred])
 
-print("Precision = {}".format(precision_score(Y_test, best_preds, average='macro')))
-print("Recall = {}".format(recall_score(Y_test, best_preds, average='macro')))
-print("Accuracy = {}".format(accuracy_score(Y_test, best_preds)))
 
 ## OR set a custom threshold (in this problem, 0.21 yields the best prediction)
-#test_pred = (model.predict_proba(data_test)[:,1] >= 0.21).astype(int)
-#test_pred[0:20] #display the first 20 predictions of the numpy array
+test_pred = (model.predict_proba(data_test)[:,1] >= 0.21).astype(int)
+test_pred[0:20] #display the first 20 predictions of the numpy array
 
 
 
 #Save the prediction in a new column in the data_test DF
-data_test['prediction'] = best_preds
+data_test['prediction'] = test_pred
 data_test.head()
 
-
+'''''
 
 #Reset the index
 final = data_test.reset_index()
@@ -724,5 +712,5 @@ print(sub.shape[0]==75000)
 
 #get csv
 sub.to_csv('sub.csv', index=False)
-
+'''''
 
