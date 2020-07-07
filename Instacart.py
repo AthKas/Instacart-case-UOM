@@ -532,11 +532,11 @@ X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
 ## SET BOOSTER'S PARAMETERS
 ########################################
 parameters = {'eval_metric':'logloss', 
-              "max_depth":8,
-            "colsample_bytree":0.4,
-            "subsample":0.9,
-            "lambda": 0.9,
-            "min_child_weight": 0.9,
+              "max_depth":9,
+            "colsample_bytree":0.6,
+            "subsample":0.7,
+            "lambda": 0.95,
+            "min_child_weight": 0.7,
             "eta": 0.2,
             "gamma": 6,
              }
@@ -578,7 +578,7 @@ paramGrid = {"max_depth":[9],
             "colsample_bytree":[0.6],
             "subsample":[0.7],
             "lambda": [0.95],
-            "min_child_weight": [ 0.7, 0.8],
+            "min_child_weight": [ 0.7],
             "eta": [0.2],
             "gamma": [6],
             }  
