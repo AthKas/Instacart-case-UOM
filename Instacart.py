@@ -537,18 +537,17 @@ X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
 parameters = {'eval_metric':'logloss', 
               "max_depth":8,
             "colsample_bytree":0.4,
-            "subsample":0.95,
+            "subsample":0.9,
             "lambda": 0.9,
             "min_child_weight": 0.9,
             "eta": 0.2,
-            "gamma": 4, 
-              "n_estimators": 50
+            "gamma": 6             
              }
 
 ########################################
 ## INSTANTIATE XGBClassifier()
 ########################################
-xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=parameters, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
+xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=parameters, n_estimators= 50, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
 
 ########################################
 ## TRAIN MODEL
@@ -556,7 +555,7 @@ xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=parameters, num
 model = xgbc.fit(X_train, y_train)
 
 model.get_xgb_params()
-
+'''''
 ###########################
 ## DISABLE WARNINGS
 ###########################
@@ -580,11 +579,11 @@ from sklearn.model_selection import GridSearchCV
 ####################################    
 paramGrid = {"max_depth":[8],
             "colsample_bytree":[0.4],
-            "subsample":[0.9, 0.95],
-            "lambda": [0.8, 0.9],
+            "subsample":[0.9],
+            "lambda": [0.9],
             "min_child_weight": [ 0.9],
             "eta": [0.2],
-            "gamma": [6,7],
+            "gamma": [6],
             }  
 
 ########################################
@@ -623,11 +622,10 @@ del [X_train, y_train]
 
 
 model.get_params()
-
-
-
-
 '''''
+
+
+
 ## OR set a custom threshold (in this problem, 0.21 yields the best prediction)
 test_pred = (model.predict_proba(data_test)[:,1] >= 0.21).astype(int)
 test_pred[0:20] #display the first 20 predictions of the numpy array
@@ -714,4 +712,4 @@ print(sub.shape[0]==75000)
 #get csv
 sub.to_csv('sub.csv', index=False)
 
-'''''
+
