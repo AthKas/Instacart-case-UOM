@@ -525,7 +525,7 @@ data_test.head()
 ## IMPORT REQUIRED PACKAGES
 ###########################
 import xgboost as xgb
-
+from sklearn.metrics import precision_score, recall_score, accuracy_score
 ##########################################
 ## SPLIT DF TO: X_train, y_train (axis=1)
 ##########################################
