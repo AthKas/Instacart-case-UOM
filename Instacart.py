@@ -598,7 +598,7 @@ parameters = {"objective":'binary:logistic',
              }
 ########################################
 ########################################
-model = xgb.train(params=parameters, dtrain= D_train, num_boost_round=500)
+model = xgb.train(params = parameters, dtrain = D_train, num_boost_round = 500)
 #xgb.plot_importance(model)
 
 
