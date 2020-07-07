@@ -5,7 +5,6 @@
 
 # For data manipulation
 import pandas as pd  
-import numpy as np
 
 # Garbage Collector to free up memory
 import gc                         
@@ -525,13 +524,10 @@ data_test.head()
 ## IMPORT REQUIRED PACKAGES
 ###########################
 import xgboost as xgb
-from sklearn.metrics import precision_score, recall_score, accuracy_score
 ##########################################
 ## SPLIT DF TO: X_train, y_train (axis=1)
 ##########################################
 X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
-D_train = xgb.DMatrix(X_train, label=y_train)
-D_test = xgb.DMatrix(data_test)
 ########################################
 ## SET BOOSTER'S PARAMETERS
 ########################################
@@ -547,7 +543,7 @@ parameters = {'eval_metric':'logloss',
 ########################################
 ## INSTANTIATE XGBClassifier()
 ########################################
-xgbc = xgb.XGBClassifier(parameters, objective= 'binary:logistic',n_estimators= 50, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
+xgbc = xgb.XGBClassifier(objective= 'binary:logistic',parameters=parameters ,n_estimators= 50, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
 
 ########################################
 ## TRAIN MODEL
