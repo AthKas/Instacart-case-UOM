@@ -525,7 +525,7 @@ data_test.head()
 ## SPLIT DF TO: X_train, y_train (axis=1)
 ##########################################
 X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
-
+'''''
 # CREATE MODEL
 ###########################
 ## DISABLE WARNINGS
@@ -575,7 +575,7 @@ print("The best parameters are: /n",  gridsearch.best_params_)
 
 # Store the model for prediction
 model = gridsearch.best_estimator_
-
+'''''
 
 ##########################################
 #TRAIN MODEL
