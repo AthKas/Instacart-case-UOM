@@ -591,7 +591,7 @@ parameters = {"objective":'binary:logistic',
             "subsample":0.7,
             "lambda": 0.95,
             "min_child_weight": 0.7,
-            "eta": 0.076,
+            "eta": 0.075,
             "gamma": 6,
                "gpu_id":0,
                "tree_method": 'gpu_hist'
@@ -607,7 +607,7 @@ test_pred = (model.predict(D_test) >= 0.21)
 test_pred[0:20] #display the first 20 predictions of the numpy array
 
 
-'''''
+
 #Save the prediction in a new column in the data_test DF
 data_test['prediction'] = test_pred
 data_test.head()
@@ -689,5 +689,3 @@ print(sub.shape[0]==75000)
 #get csv
 sub.to_csv('sub.csv', index=False)
 
-
-'''''
