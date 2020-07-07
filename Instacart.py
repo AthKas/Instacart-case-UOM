@@ -552,7 +552,7 @@ model = xgbc.fit(X_train, y_train)
 
 model.get_xgb_params()
 
-
+'''''
 ###########################
 ## DISABLE WARNINGS
 ###########################
@@ -620,7 +620,7 @@ del [X_train, y_train]
 
 model.get_params()
 
-
+'''''
 
 
 ## OR set a custom threshold (in this problem, 0.21 yields the best prediction)
@@ -633,7 +633,7 @@ test_pred[0:20] #display the first 20 predictions of the numpy array
 data_test['prediction'] = test_pred
 data_test.head()
 
-'''''
+
 
 #Reset the index
 final = data_test.reset_index()
@@ -708,5 +708,5 @@ print(sub.shape[0]==75000)
 
 #get csv
 sub.to_csv('sub.csv', index=False)
-'''''
+
 
