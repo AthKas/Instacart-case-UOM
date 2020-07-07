@@ -545,7 +545,7 @@ paramGrid = {"max_depth":[9],
             "subsample":[0.7],
             "lambda": [0.95],
             "min_child_weight": [0.7],
-            "eta": [0.1,0.2],
+            "eta": [0.025, 0.05, 0.075, 0.1],
             "gamma": [6],
             }  
 
