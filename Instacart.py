@@ -531,7 +531,7 @@ import xgboost as xgb
 ##########################################
 X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
 D_train = xgb.DMatrix(X_train, label=y_train)
-y_test = xgb.DMatrix(data_test)
+D_test = xgb.DMatrix(data_test)
 ########################################
 ## SET BOOSTER'S PARAMETERS
 ########################################
@@ -544,11 +544,11 @@ parameters = {'eval_metric':'logloss',
             "eta": 0.2,
             "gamma": 6             
              }
-
+steps = 20
 ########################################
 ## INSTANTIATE XGBClassifier()
 ########################################
-xgbc = xgb.train(parameters, D_train, steps=20, objective='binary:logistic', n_estimators= 50, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
+xgbc = xgb.train(parameters, D_train, steps, objective='binary:logistic', n_estimators= 50, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
 
 ########################################
 ## TRAIN MODEL
@@ -557,6 +557,12 @@ xgbc = xgb.train(parameters, D_train, steps=20, objective='binary:logistic', n_e
 
 #model.get_xgb_params()
 
+preds = model.predict(D_test)
+best_preds = np.asarray([np.argmax(line) for line in preds])
+
+print("Precision = {}".format(precision_score(Y_test, best_preds, average='macro')))
+print("Recall = {}".format(recall_score(Y_test, best_preds, average='macro')))
+print("Accuracy = {}".format(accuracy_score(Y_test, best_preds)))
 ###########################
 ## DISABLE WARNINGS
 ###########################
