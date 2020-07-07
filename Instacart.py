@@ -633,7 +633,7 @@ model.get_params()
 '''''
 
 test_pred = model.predict(D_test)
-best_preds = np.asarray([np.argmax(line) for line in preds])
+best_preds = np.asarray([np.argmax(line) for line in test_pred])
 
 print("Precision = {}".format(precision_score(Y_test, best_preds, average='macro')))
 print("Recall = {}".format(recall_score(Y_test, best_preds, average='macro')))
@@ -646,7 +646,7 @@ print("Accuracy = {}".format(accuracy_score(Y_test, best_preds)))
 
 
 #Save the prediction in a new column in the data_test DF
-data_test['prediction'] = test_pred
+data_test['prediction'] = best_preds
 data_test.head()
 
 
