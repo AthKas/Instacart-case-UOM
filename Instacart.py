@@ -555,7 +555,7 @@ xgbc = xgb.XGBClassifier(objective='binary:logistic', parameters=parameters, n_e
 model = xgbc.fit(X_train, y_train)
 
 model.get_xgb_params()
-'''''
+
 ###########################
 ## DISABLE WARNINGS
 ###########################
@@ -577,9 +577,9 @@ from sklearn.model_selection import GridSearchCV
 # Be cautious what parameters you enter in paramiGrid section.
 # More paremeters means that GridSearch will create and evaluate more models.
 ####################################    
-paramGrid = {"max_depth":[8],
-            "colsample_bytree":[0.4],
-            "subsample":[0.9],
+paramGrid = {"max_depth":[8, 9],
+            "colsample_bytree":[0.3, 0.4, 0.5],
+            "subsample":[0.8, 0.9],
             "lambda": [0.9],
             "min_child_weight": [ 0.9],
             "eta": [0.2],
@@ -622,7 +622,7 @@ del [X_train, y_train]
 
 
 model.get_params()
-'''''
+
 
 
 
