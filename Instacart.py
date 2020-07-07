@@ -361,7 +361,7 @@ uxp = uxp.merge(last_five, on=['user_id', 'product_id'], how='left')
 uxp['times_last5'] = uxp['times_last5'].fillna(0)
 del last_five
 uxp.head()
-
+'''''
 #Create uxp_aop
 uxp_aop= op.groupby(['user_id', 'product_id'])['add_to_cart_order'].mean().to_frame('uxp_aop')
 uxp_aop.head()
@@ -419,6 +419,7 @@ uxp = uxp.merge(uxp_hour5, on=['user_id', 'product_id'], how='left')
 del uxp_hour5
 uxp['uxp_hour5'] = uxp['uxp_hour5'].fillna(0)
 uxp.head()
+'''''
 #Remove temporary DataFrames
 del op, op5
 gc.collect()
