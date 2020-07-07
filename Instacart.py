@@ -530,7 +530,7 @@ import xgboost as xgb
 ## SPLIT DF TO: X_train, y_train (axis=1)
 ##########################################
 X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
-D_train = xgb.DMatrix(X_train), label=y_train)
+D_train = xgb.DMatrix(X_train, label=y_train)
 y_test = xgb.DMatrix(data_test)
 ########################################
 ## SET BOOSTER'S PARAMETERS
