@@ -552,7 +552,7 @@ model = xgbc.fit(X_train, y_train)
 
 model.get_xgb_params()
 
-'''''
+
 ###########################
 ## DISABLE WARNINGS
 ###########################
@@ -574,11 +574,11 @@ from sklearn.model_selection import GridSearchCV
 # Be cautious what parameters you enter in paramiGrid section.
 # More paremeters means that GridSearch will create and evaluate more models.
 ####################################    
-paramGrid = {"max_depth":[9],
+paramGrid = {"max_depth":[8,9],
             "colsample_bytree":[0.6],
             "subsample":[0.7],
             "lambda": [0.95],
-            "min_child_weight": [ 0.7],
+            "min_child_weight": [0.7],
             "eta": [0.2],
             "gamma": [6],
             }  
@@ -620,7 +620,7 @@ del [X_train, y_train]
 
 model.get_params()
 
-'''''
+
 
 
 ## OR set a custom threshold (in this problem, 0.21 yields the best prediction)
