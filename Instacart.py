@@ -553,7 +553,7 @@ steps = 20
 ########################################
 ## INSTANTIATE XGBClassifier()
 ########################################
-xgbc = xgb.train(parameters, D_train, steps )
+model = xgb.train(parameters, D_train, steps )
 
 ########################################
 ## TRAIN MODEL
@@ -562,12 +562,7 @@ xgbc = xgb.train(parameters, D_train, steps )
 
 #model.get_xgb_params()
 
-preds = model.predict(D_test)
-best_preds = np.asarray([np.argmax(line) for line in preds])
-
-print("Precision = {}".format(precision_score(Y_test, best_preds, average='macro')))
-print("Recall = {}".format(recall_score(Y_test, best_preds, average='macro')))
-print("Accuracy = {}".format(accuracy_score(Y_test, best_preds)))
+'''''
 ###########################
 ## DISABLE WARNINGS
 ###########################
@@ -635,12 +630,18 @@ del [X_train, y_train]
 
 model.get_params()
 
+''''
 
+test_pred = model.predict(D_test)
+best_preds = np.asarray([np.argmax(line) for line in preds])
 
+print("Precision = {}".format(precision_score(Y_test, best_preds, average='macro')))
+print("Recall = {}".format(recall_score(Y_test, best_preds, average='macro')))
+print("Accuracy = {}".format(accuracy_score(Y_test, best_preds)))
 
 ## OR set a custom threshold (in this problem, 0.21 yields the best prediction)
-test_pred = (model.predict_proba(data_test)[:,1] >= 0.21).astype(int)
-test_pred[0:20] #display the first 20 predictions of the numpy array
+#test_pred = (model.predict_proba(data_test)[:,1] >= 0.21).astype(int)
+#test_pred[0:20] #display the first 20 predictions of the numpy array
 
 
 
@@ -671,7 +672,7 @@ final.head()
 
 # In[86]:
 
-''''
+
 #remove user_id column
 final = final.drop('user_id', axis=1)
 #convert product_id as integer
@@ -724,4 +725,4 @@ print(sub.shape[0]==75000)
 #get csv
 sub.to_csv('sub.csv', index=False)
 
-'''''
+
