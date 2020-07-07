@@ -5,7 +5,7 @@
 
 # For data manipulation
 import pandas as pd  
-
+import numpy as np
 
 # Garbage Collector to free up memory
 import gc                         
