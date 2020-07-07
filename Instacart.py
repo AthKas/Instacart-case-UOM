@@ -545,7 +545,7 @@ paramGrid = {"max_depth":[9],
             "subsample":[0.7],
             "lambda": [0.95],
             "min_child_weight": [0.7],
-            "eta": [0.025, 0.05, 0.075, 0.1],
+            "eta": [0.07, 0.075, 0.08],
             "gamma": [6],
             }  
 
@@ -557,7 +557,7 @@ xgbc = xgb.XGBClassifier(objective='binary:logistic', eval_metric='logloss', num
 ##############################################
 ## DEFINE HOW TO TRAIN THE DIFFERENT MODELS
 #############################################
-gridsearch = GridSearchCV(xgbc, paramGrid, cv=3, verbose=2, n_jobs=1)
+gridsearch = GridSearchCV(xgbc, paramGrid, cv=5, verbose=2, n_jobs=1)
 
 ################################################################
 ## TRAIN THE MODELS
@@ -598,7 +598,7 @@ parameters = {"objective":'binary:logistic',
              }
 ########################################
 ########################################
-model = xgb.train(dtrain= D_train, parameters=parameters , num_boost_round=500)
+model = xgb.train(dtrain= D_train, params=parameters , num_boost_round=500)
 model.get_xgb_params()
 xgb.plot_importance(model)
 
