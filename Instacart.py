@@ -545,7 +545,7 @@ paramGrid = {"max_depth":[9],
             "subsample":[0.7],
             "lambda": [0.95],
             "min_child_weight": [0.7],
-            "eta": [0.07, 0.075, 0.08],
+            "eta": [0.074, 0.075, 0.076],
             "gamma": [6],
             }  
 
@@ -591,7 +591,7 @@ parameters = {"objective":'binary:logistic',
             "subsample":0.7,
             "lambda": 0.95,
             "min_child_weight": 0.7,
-            "eta": 0.2,
+            "eta": 0.075,
             "gamma": 6,
                "gpu_id":0,
                "tree_method": 'gpu_hist'
@@ -599,7 +599,6 @@ parameters = {"objective":'binary:logistic',
 ########################################
 ########################################
 model = xgb.train(dtrain= D_train, params=parameters , num_boost_round=500)
-model.get_xgb_params()
 xgb.plot_importance(model)
 
 # Delete X_train , y_train
