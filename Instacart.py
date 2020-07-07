@@ -361,7 +361,7 @@ uxp = uxp.merge(last_five, on=['user_id', 'product_id'], how='left')
 uxp['times_last5'] = uxp['times_last5'].fillna(0)
 del last_five
 uxp.head()
-'''''
+
 #Create uxp_aop
 uxp_aop= op.groupby(['user_id', 'product_id'])['add_to_cart_order'].mean().to_frame('uxp_aop')
 uxp_aop.head()
@@ -419,7 +419,7 @@ uxp = uxp.merge(uxp_hour5, on=['user_id', 'product_id'], how='left')
 del uxp_hour5
 uxp['uxp_hour5'] = uxp['uxp_hour5'].fillna(0)
 uxp.head()
-'''''
+
 #Remove temporary DataFrames
 del op, op5
 gc.collect()
@@ -525,7 +525,7 @@ data_test.head()
 ## SPLIT DF TO: X_train, y_train (axis=1)
 ##########################################
 X_train, y_train = data_train.drop('reordered', axis=1), data_train.reordered
-'''''
+
 # CREATE MODEL
 ###########################
 ## DISABLE WARNINGS
@@ -575,14 +575,14 @@ print("The best parameters are: /n",  gridsearch.best_params_)
 
 # Store the model for prediction
 model = gridsearch.best_estimator_
-'''''
+
 
 ##########################################
 #TRAIN MODEL
 
 D_train = xgb.DMatrix(data=X_train, label = y_train)
 D_test = xgb.DMatrix(data=data_test)
-#######################################
+########################################
 ## SET BOOSTER'S PARAMETERS
 ########################################
 parameters = {"objective":'binary:logistic',
