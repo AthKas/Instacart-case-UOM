@@ -542,13 +542,18 @@ parameters = {'eval_metric':'logloss',
             "lambda": 0.9,
             "min_child_weight": 0.9,
             "eta": 0.2,
-            "gamma": 6             
+            "gamma": 6,
+              "objective": 'binary:logistic',
+              "n_estimators": 50,
+              "num_boost_round": 10,
+              "gpu_id": 0,
+              "tree_method": 'gpu_hist'
              }
 steps = 20
 ########################################
 ## INSTANTIATE XGBClassifier()
 ########################################
-xgbc = xgb.train(parameters, D_train, steps, objective='binary:logistic', n_estimators= 50, num_boost_round=10, gpu_id=0, tree_method = 'gpu_hist')
+xgbc = xgb.train(parameters, D_train, steps )
 
 ########################################
 ## TRAIN MODEL
