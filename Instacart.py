@@ -457,17 +457,6 @@ orders_future = orders[((orders.eval_set=='train') | (orders.eval_set=='test'))]
 orders_future = orders_future[ ['user_id', 'eval_set', 'order_id'] ]
 orders_future.head(10)
 
-## Second approach (if you want to test it you have to re-run the notebook):
-# In one step keep only the future orders from all customers: train & test 
-#orders_future = orders.loc[((orders.eval_set=='train') | (orders.eval_set=='test')), ['user_id', 'eval_set', 'order_id'] ]
-#orders_future.head(10)
-
-## Third approach (if you want to test it you have to re-run the notebook):
-# In one step exclude all the prior orders so to deal with the future orders from all customers
-#orders_future = orders.loc[orders.eval_set!='prior', ['user_id', 'eval_set', 'order_id'] ]
-#orders_future.head(10)
-
-
 
 # bring the info of the future orders to data DF
 data = data.merge(orders_future, on='user_id', how='left')
